@@ -1,3 +1,32 @@
+<?php
+
+include 'connection.php';
+
+$id = $_REQUEST['page_id'] ;
+
+$edit = "SELECT * FROM pages WHERE page_id = $id";
+
+$result = mysqli_query($connect, $edit);
+
+$row = mysqli_fetch_assoc($result);
+
+if(isset($_POST['update'])){
+
+	$pagetitle = $_POST['pagetitle'];
+	$pagedes = $_POST['pagecontent'];
+
+	$update = "UPDATE pages SET page_title = '$pagetitle', page_des = '$pagedes' WHERE page_id = $id";
+
+	if(mysqli_query($connect, $update)){
+		echo "<script>alert('Record Updated')</script>";
+	} else {
+		echo '<script></script>';
+	}
+
+} 
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,18 +43,18 @@
   
 	<div class="container">
 		<h1>New Page</h1>
-	  <form method="post" action="page-process.php">
+	  <form method="post" action="">
 		  <div class="form-group">
 			<label for="exampleFormControlInput1">Page Title</label>
-			<input type="text" name="pagetitle" class="form-control" id="exampleFormControlInput1" placeholder="Page Title">
+			<input type="text" name="pagetitle" class="form-control" id="exampleFormControlInput1" placeholder="Page Title" Value="<?php echo $row['page_title'] ; ?>">
 		  </div>
 		  
 		  <div class="form-group">
 			<label for="exampleFormControlTextarea1">Page Content</label>
-			<textarea class="form-control" name="pagecontent" id="exampleFormControlTextarea1" rows="3"></textarea>
+			<textarea class="form-control" name="pagecontent" id="exampleFormControlTextarea1" rows="3" Value="<?php echo $row['page_title'] ; ?>"></textarea>
 		  </div>
 		  <div class="form-group">
-			<button class="btn btn-danger" type="submit">Save</button>
+			<button class="btn btn-danger" name="update" type="submit">Save</button>
 		  </div>
 		</form>
 	</div>

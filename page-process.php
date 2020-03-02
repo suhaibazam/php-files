@@ -1,14 +1,14 @@
 <?php
+
 include 'connection.php';
 
-$pagetitle = $_POST ['pagetitle'];
-$pagecontent = $_POST ['pagecontent'];
+$pagetitle = $_POST['pagetitle'];
+$pagecontent = $_POST['pagecontent'];
 
-$insert = "INSERT INTO pages(page_title, page_des)
-     VALUES('$pagetitle','$pagecontent')";
+$insert = "INSERT INTO pages(page_title, page_des) 
+		   VALUES('$pagetitle', '$pagecontent')";		   
 
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,22 +22,23 @@ $insert = "INSERT INTO pages(page_title, page_des)
     <title>Create Page</title>
   </head>
   <body>
-<div class="container">
-        <h1>Page Result</h1>
-        <?php
+  
+	<div class="container">
+		<h1>Page Result</h1>
+		
+		<?php
 			if(mysqli_query($connect, $insert)){
 				echo '<h3>Your record has been added successfully</h3>';
 			} else {
 				echo '<b>There is an error<b>';
 			}
 		?>
-   <div class="row">
-        <div class="col"><a href="all_pages.php" class="btn btn-success">All Pages</a></div>
-        <div class="col"><a href="create_page.php" class="btn btn-dark">Create Page</a></div>
-   </div>
-</div>
-
-
+		<div class="row">
+			<div class="col"><a href="all_page.php" class="btn btn-success">All Pages</a></div>
+			<div class="col"><a href="create_page.php" class="btn btn-dark">Create New Page</a></div>
+		</div>
+	</div>
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -1,3 +1,12 @@
+<?php
+
+include 'connection.php';
+
+$pages = "SELECT * FROM pages";
+
+$result = mysqli_query($connect, $pages);		   
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,26 +17,56 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Create Page</title>
+    <title>All Pages</title>
   </head>
   <body>
   
 	<div class="container">
-		<h1>New Page</h1>
-	  <form method="post" action="page-process.php">
-		  <div class="form-group">
-			<label for="exampleFormControlInput1">Page Title</label>
-			<input type="text" name="pagetitle" class="form-control" id="exampleFormControlInput1" placeholder="Page Title">
-		  </div>
-		  
-		  <div class="form-group">
-			<label for="exampleFormControlTextarea1">Page Content</label>
-			<textarea class="form-control" name="pagecontent" id="exampleFormControlTextarea1" rows="3"></textarea>
-		  </div>
-		  <div class="form-group">
-			<button class="btn btn-danger" type="submit">Save</button>
-		  </div>
-		</form>
+		<h1>All Pages</h1>
+		
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Page Title</th>
+				<th>Page Content</th>
+				<th>Action</th>
+			</tr>
+			
+			<?php
+				if(mysqli_num_rows($result) > 0){
+					
+					while($row = mysqli_fetch_assoc($result)){
+			
+			?>
+				<tr>
+					<td><?php echo $row['page_id'] ; ?></td>
+					<td><?php echo $row['page_title'] ; ?></td>
+					<td><?php echo $row['page_des'] ; ?></td>
+					<td>
+						<a href="edit.php?page_id=<?php echo $row['page_id'] ; ?>" class="btn btn-dark">Edit</a>
+						<a href="delete.php?page_id=<?php echo $row['page_id'] ; ?>" class="btn btn-danger">Delete</a>
+					</td>
+				</tr>
+			<?php		
+					}
+		
+				} else {
+					echo 'No Record Found';
+				}
+			?>
+			
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		
+		<div class="row">
+			<div class="col"><a href="" class="btn btn-success">All Pages</a></div>
+			<div class="col"><a href="create_page.php" class="btn btn-dark">Create New Page</a></div>
+		</div>
 	</div>
     
 
